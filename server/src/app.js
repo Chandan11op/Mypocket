@@ -24,17 +24,19 @@ const app = express();
 app.use(helmet());
 
 // CORS configuration
+const rawClientUrls = (env.CLIENT_URL || '').split(',').map((u) => u.trim().replace(/\/$/, '')).filter(Boolean);
 const allowedOrigins = [
-  env.CLIENT_URL,
+  ...rawClientUrls,
   'http://localhost:5173',
   'http://127.0.0.1:5173',
+  'http://localhost:3000',
 ];
 
 app.use(
   cors({
     origin: (origin, callback) => {
       // Allow requests with no origin (mobile apps, Postman, curl)
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
         return callback(null, true);
       }
       return callback(new Error(`CORS policy error: Origin ${origin} not allowed`));
