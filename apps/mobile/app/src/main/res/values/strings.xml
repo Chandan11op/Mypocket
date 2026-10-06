@@ -1,3 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">My Pocket</string>
+    <string name="app_tagline">Smart Personal Accounting &amp; Wealth Management</string>
+
+    <!-- Auth -->
+    <string name="login">Log In</string>
+    <string name="register">Register</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="full_name">Full Name</string>
+    <string name="username">Username</string>
+    <string name="email">Email Address</string>
+    <string name="date_of_birth">Date of Birth (YYYY-MM-DD)</string>
+    <string name="dont_have_account">Don\'t have an account? Register</string>
+    <string name="already_have_account">Already have an account? Log In</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="send_reset_token">Send Reset Instructions</string>
+    <string name="enter_reset_token">Reset Token</string>
+    <string name="new_password">New Password</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_accounts">Accounts</string>
+    <string name="nav_transactions">Transactions</string>
+    <string name="nav_ai">AI Assistant</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- Dashboard -->
+    <string name="net_worth">Net Worth</string>
+    <string name="total_assets">Total Assets</string>
+    <string name="total_liabilities">Total Liabilities</string>
+    <string name="quick_actions">Quick Actions</string>
+    <string name="add_transaction">+ Add Transaction</string>
+    <string name="recent_transactions">Recent Transactions</string>
+
+    <!-- Transactions -->
+    <string name="what_happened">What happened?</string>
+    <string name="expense">Expense</string>
+    <string name="income">Income</string>
+    <string name="transfer">Transfer Money</string>
+    <string name="investment">Investment</string>
+    <string name="borrow">Borrow Money</string>
+    <string name="repay">Repay Borrowed Money</string>
+    <string name="lend">Lend Money</string>
+    <string name="receive_back">Receive Money Back</string>
+
+    <!-- Forms -->
+    <string name="amount">Amount</string>
+    <string name="reason">Reason / Description</string>
+    <string name="date">Transaction Date</string>
+    <string name="paid_via">Paid via</string>
+    <string name="paid_from">Paid from</string>
+    <string name="received_in">Received in</string>
+    <string name="from_person">From (Person/Company)</string>
+    <string name="to_person">To (Person/Shop/Company)</string>
+    <string name="purpose">Purpose</string>
+
+    <!-- Accounts & Reconciliation -->
+    <string name="accounts">Accounts</string>
+    <string name="add_account">+ Add Account</string>
+    <string name="reconcile">Reconcile Account</string>
+    <string name="my_pocket_balance">My Pocket Balance</string>
+    <string name="actual_balance">Actual Balance</string>
+    <string name="difference">Difference</string>
+    <string name="reconciled">Reconciled</string>
+    <string name="unreconciled">Unreconciled</string>
+
+    <!-- Statements -->
+    <string name="balance_sheet">Balance Sheet</string>
+    <string name="profit_loss">Profit &amp; Loss</string>
+    <string name="cash_flow">Cash Flow</string>
+
+    <!-- Actions -->
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="logout">Log Out</string>
 </resources>
