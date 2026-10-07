@@ -46,14 +46,17 @@ export function DashboardPage() {
     try {
       const [summaryRes, txRes] = await Promise.all([
         transactionApi.getSummary(),
-        transactionApi.getTransactions({ limit: 5, page: 1, sort_by: 'date', sort_order: 'desc' }),
+        transactionApi.getStatement(),
       ]);
 
       if (summaryRes.data.success) {
         setSummary(summaryRes.data.data);
       }
       if (txRes.data.success) {
-        setRecentTransactions(txRes.data.data.transactions || []);
+        const statement = txRes.data.data.statement || [];
+        // statement is chronological (oldest first), so reverse and take top 5
+        const recent = statement.slice().reverse().slice(0, 5);
+        setRecentTransactions(recent);
       }
     } catch (err) {
       setErrorMessage(
