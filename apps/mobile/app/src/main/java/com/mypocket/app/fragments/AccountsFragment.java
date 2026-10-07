@@ -16,8 +16,12 @@ import com.mypocket.app.activities.AccountDetailActivity;
 import com.mypocket.app.activities.AddAccountActivity;
 import com.mypocket.app.adapters.AccountAdapter;
 import com.mypocket.app.databinding.FragmentAccountsBinding;
+import com.mypocket.app.models.Account;
 import com.mypocket.app.models.AccountsListResponse;
 import com.mypocket.app.repository.AccountRepository;
+import com.mypocket.app.utils.ErrorUtils;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +44,7 @@ public class AccountsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        accountRepository = new AccountRepository(requireContext());
+        accountRepository = AccountRepository.getInstance(requireContext());
         adapter = new AccountAdapter(account -> {
             Intent intent = new Intent(requireContext(), AccountDetailActivity.class);
             intent.putExtra("account_id", account.getId());
@@ -55,32 +59,45 @@ public class AccountsFragment extends Fragment {
         binding.rvAccounts.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.rvAccounts.setAdapter(adapter);
 
-        binding.btnAddAccount.setOnClickListener(v -> {
-            startActivity(new Intent(requireContext(), AddAccountActivity.class));
-        });
+        binding.btnAddAccount.setOnClickListener(v -> startActivity(new Intent(requireContext(), AddAccountActivity.class)));
+        binding.swipeRefresh.setOnRefreshListener(() -> loadAccounts(true));
 
-        binding.swipeRefresh.setOnRefreshListener(this::loadAccounts);
+        // 1. Instantly display cached data if available (NO full screen spinner!)
+        if (accountRepository.hasCachedAccounts()) {
+            adapter.setAccounts(accountRepository.getCachedAccounts());
+        }
 
-        loadAccounts();
+        // 2. Silent background refresh
+        loadAccounts(false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        loadAccounts();
+        loadAccounts(false);
     }
 
-    private void loadAccounts() {
-        binding.swipeRefresh.setRefreshing(true);
+    private void loadAccounts(boolean isManualPullToRefresh) {
+        if (!isAdded()) return;
+
+        boolean hasCache = accountRepository.hasCachedAccounts();
+        if (isManualPullToRefresh || !hasCache) {
+            binding.swipeRefresh.setRefreshing(true);
+        }
+
         accountRepository.getAccounts(new Callback<AccountsListResponse>() {
             @Override
             public void onResponse(@NonNull Call<AccountsListResponse> call, @NonNull Response<AccountsListResponse> response) {
                 if (isAdded()) {
                     binding.swipeRefresh.setRefreshing(false);
                     if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                        adapter.setAccounts(response.body().getAccounts());
+                        List<Account> accounts = response.body().getAccounts();
+                        adapter.setAccounts(accounts);
                     } else {
-                        Toast.makeText(requireContext(), "Failed to load accounts", Toast.LENGTH_SHORT).show();
+                        String errMsg = ErrorUtils.parseError(response);
+                        if (!accountRepository.hasCachedAccounts()) {
+                            Toast.makeText(requireContext(), errMsg, Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             }
@@ -89,7 +106,10 @@ public class AccountsFragment extends Fragment {
             public void onFailure(@NonNull Call<AccountsListResponse> call, @NonNull Throwable t) {
                 if (isAdded()) {
                     binding.swipeRefresh.setRefreshing(false);
-                    Toast.makeText(requireContext(), "Network error", Toast.LENGTH_SHORT).show();
+                    String errMsg = ErrorUtils.parseFailure(t);
+                    if (!accountRepository.hasCachedAccounts()) {
+                        Toast.makeText(requireContext(), errMsg, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

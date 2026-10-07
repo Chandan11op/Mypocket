@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.mypocket.app.activities.LoginActivity;
+import com.mypocket.app.activities.SettingsActivity;
 import com.mypocket.app.databinding.FragmentProfileBinding;
 import com.mypocket.app.network.ApiClient;
 import com.mypocket.app.utils.PreferenceManager;
@@ -36,16 +36,8 @@ public class ProfileFragment extends Fragment {
 
         binding.tvName.setText(preferenceManager.getUserName());
         binding.tvMobile.setText(preferenceManager.getUserMobile());
-        binding.etBaseUrl.setText(preferenceManager.getBaseUrl());
 
-        binding.btnSaveUrl.setOnClickListener(v -> {
-            String url = binding.etBaseUrl.getText().toString().trim();
-            if (!url.isEmpty()) {
-                preferenceManager.saveBaseUrl(url);
-                ApiClient.resetClient();
-                Toast.makeText(requireContext(), "API Base URL updated!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        binding.btnOpenSettings.setOnClickListener(v -> startActivity(new Intent(requireContext(), SettingsActivity.class)));
 
         binding.btnLogout.setOnClickListener(v -> {
             preferenceManager.clear();

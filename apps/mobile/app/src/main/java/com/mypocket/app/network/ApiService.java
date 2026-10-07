@@ -7,12 +7,15 @@ import com.mypocket.app.models.AiChatRequest;
 import com.mypocket.app.models.AiChatResponse;
 import com.mypocket.app.models.AiHistoryResponse;
 import com.mypocket.app.models.AuthResponse;
+import com.mypocket.app.models.BalanceSheetResponse;
+import com.mypocket.app.models.CashFlowResponse;
 import com.mypocket.app.models.CreateAccountRequest;
 import com.mypocket.app.models.FinancialPositionResponse;
 import com.mypocket.app.models.ForgotPasswordRequest;
 import com.mypocket.app.models.GenericResponse;
 import com.mypocket.app.models.LoginRequest;
 import com.mypocket.app.models.PersonsListResponse;
+import com.mypocket.app.models.ProfitLossResponse;
 import com.mypocket.app.models.ReconciliationRequest;
 import com.mypocket.app.models.ReconciliationResponse;
 import com.mypocket.app.models.RegisterRequest;
@@ -75,6 +78,15 @@ public interface ApiService {
     @GET("financial-position")
     Call<FinancialPositionResponse> getFinancialPosition();
 
+    @GET("statements/balance-sheet")
+    Call<BalanceSheetResponse> getBalanceSheet();
+
+    @GET("statements/profit-loss")
+    Call<ProfitLossResponse> getProfitAndLoss();
+
+    @GET("statements/cash-flow")
+    Call<CashFlowResponse> getCashFlow();
+
     // Reconciliation
     @POST("reconciliation/{accountId}")
     Call<ReconciliationResponse> reconcileAccount(
@@ -82,7 +94,7 @@ public interface ApiService {
             @Body ReconciliationRequest request
     );
 
-    // Persons
+    // Persons / Ledger
     @GET("persons")
     Call<PersonsListResponse> getPersons();
 

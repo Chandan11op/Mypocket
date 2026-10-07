@@ -3,6 +3,9 @@ package com.mypocket.app.activities;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.mypocket.app.R;
@@ -22,6 +25,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // System WindowInsets handling (Prevents status bar & nav bar overlaps globally)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
+            Insets statusBarInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars());
+            v.setPadding(0, statusBarInsets.top, 0, 0);
+            return insets;
+        });
 
         loadFragment(new HomeFragment());
 
@@ -45,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
+    }
+
+    public void navigateToTransactions() {
+        binding.bottomNavigation.setSelectedItemId(R.id.nav_transactions);
+    }
+
+    public void navigateToAccounts() {
+        binding.bottomNavigation.setSelectedItemId(R.id.nav_accounts);
     }
 
     private void loadFragment(Fragment fragment) {
