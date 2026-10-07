@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'test';
 const mongoose = require('mongoose');
 const assert = require('assert');
 const path = require('path');

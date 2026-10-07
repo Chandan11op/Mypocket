@@ -30,7 +30,19 @@ const connectDB = async (retries = 3, delayMs = 3000) => {
 
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
-      const conn = await mongoose.connect(env.MONGODB_URI, {
+      let uri = env.MONGODB_URI;
+      if (env.NODE_ENV === 'test') {
+        if (uri.includes('?')) {
+          uri = uri.replace(/\/[^/?]+(\?)/, '/test$1');
+        } else {
+          uri = uri.replace(/\/[^/?]+$/, '/test');
+        }
+        if (!uri.includes('/test')) {
+            uri = uri.replace('mongodb.net', 'mongodb.net/test');
+        }
+      }
+
+      const conn = await mongoose.connect(uri, {
         autoIndex: env.NODE_ENV !== 'production',
         serverSelectionTimeoutMS: 8000,
         connectTimeoutMS: 10000,

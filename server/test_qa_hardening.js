@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'test';
 const assert = require('assert');
 const mongoose = require('mongoose');
 const connectDB = require('./src/config/db');
@@ -17,7 +18,7 @@ const runQaHardeningSuite = async () => {
 
   await connectDB();
 
-  const userQa_Mobile = '+919555555555';
+  const userQa_Mobile = '+911234567890';
   const userIso_Mobile = '+919666666666';
 
   // Clean prior test data
@@ -53,8 +54,8 @@ const runQaHardeningSuite = async () => {
         email: `ai_qa_${Date.now()}@example.com`,
         full_name: 'QA Hardening User',
         date_of_birth: '1990-01-01',
-        password: 'Password123!',
-        confirm_password: 'Password123!',
+        password: 'user123',
+        confirm_password: 'user123',
       }),
     });
     assert.strictEqual(regQa.status, 201);
@@ -62,7 +63,7 @@ const runQaHardeningSuite = async () => {
     const loginQa = await fetch(`${baseUrl}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mobile_number: userQa_Mobile, password: 'Password123!' }),
+      body: JSON.stringify({ mobile_number: userQa_Mobile, password: 'user123' }),
     });
     const dataQa = await loginQa.json();
     const tokenQa = dataQa.data.accessToken;
