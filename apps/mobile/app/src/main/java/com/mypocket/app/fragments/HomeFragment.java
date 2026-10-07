@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,9 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.mypocket.app.activities.AddTransactionActivity;
 import com.mypocket.app.adapters.TransactionAdapter;
 import com.mypocket.app.databinding.FragmentHomeBinding;
+import com.mypocket.app.models.Account;
+import com.mypocket.app.models.AccountsListResponse;
 import com.mypocket.app.models.FinancialPositionResponse;
 import com.mypocket.app.repository.AccountRepository;
 import com.mypocket.app.utils.FormatUtils;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,7 +65,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadData() {
+        if (!isAdded()) return;
         binding.swipeRefresh.setRefreshing(true);
+
         accountRepository.getFinancialPosition(new Callback<FinancialPositionResponse>() {
             @Override
             public void onResponse(@NonNull Call<FinancialPositionResponse> call, @NonNull Response<FinancialPositionResponse> response) {
@@ -75,19 +80,51 @@ public class HomeFragment extends Fragment {
                             binding.tvTotalAssets.setText(FormatUtils.formatCurrency(data.getTotalAssets()));
                             binding.tvTotalLiabilities.setText(FormatUtils.formatCurrency(data.getTotalLiabilities()));
                         }
-                    } else {
-                        Toast.makeText(requireContext(), "Failed to load financial position", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<FinancialPositionResponse> call, @NonNull Throwable t) {
-                if (isAdded()) {
-                    binding.swipeRefresh.setRefreshing(false);
-                    Toast.makeText(requireContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                if (isAdded()) binding.swipeRefresh.setRefreshing(false);
+            }
+        });
+
+        accountRepository.getAccounts(new Callback<AccountsListResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<AccountsListResponse> call, @NonNull Response<AccountsListResponse> response) {
+                if (isAdded() && response.isSuccessful() && response.body() != null && response.body().getAccounts() != null) {
+                    List<Account> accounts = response.body().getAccounts();
+                    double cashBank = 0;
+                    double investments = 0;
+                    double receivables = 0;
+                    double payables = 0;
+
+                    for (Account acc : accounts) {
+                        String type = acc.getAccountType().toUpperCase();
+                        String aClass = acc.getAccountClass().toUpperCase();
+                        double bal = acc.getBalance();
+
+                        if ("CASH".equals(type) || "BANK".equals(type) || "WALLET".equals(type)) {
+                            cashBank += bal;
+                        } else if ("INVESTMENT".equals(type)) {
+                            investments += bal;
+                        } else if ("RECEIVABLE".equals(type)) {
+                            receivables += bal;
+                        } else if ("LIABILITY".equalsIgnoreCase(aClass) || "CREDIT_CARD".equals(type) || "LOAN".equals(type)) {
+                            payables += bal;
+                        }
+                    }
+
+                    binding.tvCashBank.setText(FormatUtils.formatCurrency(cashBank));
+                    binding.tvInvestments.setText(FormatUtils.formatCurrency(investments));
+                    binding.tvReceivables.setText(FormatUtils.formatCurrency(receivables));
+                    binding.tvPayables.setText(FormatUtils.formatCurrency(payables));
                 }
             }
+
+            @Override
+            public void onFailure(@NonNull Call<AccountsListResponse> call, @NonNull Throwable t) {}
         });
     }
 

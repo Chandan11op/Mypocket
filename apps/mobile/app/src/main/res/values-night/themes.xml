@@ -1,19 +1,23 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MyPocket" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/primary_light</item>
-        <item name="colorPrimaryVariant">@color/primary</item>
-        <item name="colorOnPrimary">@color/black</item>
+    <style name="Theme.MyPocket" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/accent</item>
         <item name="colorSecondaryVariant">@color/primary_light</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <item name="android:statusBarColor">@color/secondary</item>
-        <item name="android:windowBackground">@color/secondary</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:statusBarColor">@color/bg_page</item>
+        <item name="android:navigationBarColor">@color/bg_page</item>
+        <item name="android:windowBackground">@color/bg_page</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
     </style>
 
     <style name="Theme.MyPocket.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@color/secondary</item>
+        <item name="android:statusBarColor">@color/bg_page</item>
+        <item name="android:navigationBarColor">@color/bg_page</item>
     </style>
 </resources>

@@ -2,6 +2,7 @@ package com.mypocket.app.activities;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import com.mypocket.app.databinding.ActivityRegisterBinding;
 import com.mypocket.app.models.GenericResponse;
 import com.mypocket.app.models.RegisterRequest;
 import com.mypocket.app.repository.AuthRepository;
+import com.mypocket.app.utils.ErrorUtils;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -33,9 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         authRepository = new AuthRepository(this);
 
         binding.etDob.setOnClickListener(v -> showDatePicker());
-
         binding.btnRegister.setOnClickListener(v -> performRegistration());
-
         binding.btnGoToLogin.setOnClickListener(v -> finish());
     }
 
@@ -53,42 +53,65 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void performRegistration() {
+        hideError();
+
         String mobile = binding.etMobile.getText() != null ? binding.etMobile.getText().toString().trim() : "";
         String fullName = binding.etFullName.getText() != null ? binding.etFullName.getText().toString().trim() : "";
         String username = binding.etUsername.getText() != null ? binding.etUsername.getText().toString().trim() : "";
         String email = binding.etEmail.getText() != null ? binding.etEmail.getText().toString().trim() : "";
         String dob = binding.etDob.getText() != null ? binding.etDob.getText().toString().trim() : "";
         String password = binding.etPassword.getText() != null ? binding.etPassword.getText().toString().trim() : "";
+        String confirmPassword = binding.etConfirmPassword.getText() != null ? binding.etConfirmPassword.getText().toString().trim() : "";
 
         if (mobile.isEmpty() || fullName.isEmpty() || username.isEmpty() || email.isEmpty() || dob.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+            showError("All fields are required.");
             return;
         }
 
-        RegisterRequest req = new RegisterRequest(mobile, username, email, fullName, dob, password);
+        if (!password.equals(confirmPassword)) {
+            showError("Passwords do not match.");
+            return;
+        }
 
-        binding.btnRegister.setEnabled(false);
+        RegisterRequest req = new RegisterRequest(mobile, username, email, fullName, dob, password, confirmPassword);
+
+        setLoading(true);
+
         authRepository.register(req, new Callback<GenericResponse>() {
             @Override
             public void onResponse(@NonNull Call<GenericResponse> call, @NonNull Response<GenericResponse> response) {
-                binding.btnRegister.setEnabled(true);
+                setLoading(false);
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                    Toast.makeText(RegisterActivity.this, "Registration successful! Please login.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, "Registration successful! Please log in.", Toast.LENGTH_LONG).show();
                     finish();
                 } else {
-                    String msg = "Registration failed";
-                    if (response.body() != null && response.body().getMessage() != null) {
-                        msg = response.body().getMessage();
-                    }
-                    Toast.makeText(RegisterActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    String errorMsg = ErrorUtils.parseError(response);
+                    showError(errorMsg);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<GenericResponse> call, @NonNull Throwable t) {
-                binding.btnRegister.setEnabled(true);
-                Toast.makeText(RegisterActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                setLoading(false);
+                String errorMsg = ErrorUtils.parseFailure(t);
+                showError(errorMsg);
             }
         });
+    }
+
+    private void setLoading(boolean isLoading) {
+        binding.btnRegister.setEnabled(!isLoading);
+        binding.btnRegister.setText(isLoading ? "Creating Account..." : "REGISTER");
+        binding.progressRegister.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+    }
+
+    private void showError(String msg) {
+        binding.tvError.setText(msg);
+        binding.tvError.setVisibility(View.VISIBLE);
+    }
+
+    private void hideError() {
+        binding.tvError.setText("");
+        binding.tvError.setVisibility(View.GONE);
     }
 }

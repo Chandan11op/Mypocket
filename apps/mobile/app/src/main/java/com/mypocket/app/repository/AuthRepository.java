@@ -21,6 +21,10 @@ public class AuthRepository {
         this.apiService = ApiClient.getService(context);
     }
 
+    public void checkHealth(Callback<GenericResponse> callback) {
+        apiService.checkHealth().enqueue(callback);
+    }
+
     public void login(String mobile, String password, Callback<AuthResponse> callback) {
         apiService.login(new LoginRequest(mobile, password)).enqueue(callback);
     }

@@ -1,31 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Brand Primary Colors (Emerald/Teal) -->
-    <color name="primary">#0F766E</color>
-    <color name="primary_dark">#064E3B</color>
+    <!-- Brand Primary Colors (My Pocket Emerald Theme) -->
+    <color name="primary">#059669</color>
+    <color name="primary_dark">#047857</color>
     <color name="primary_light">#10B981</color>
-    <color name="accent">#14B8A6</color>
-    <color name="accent_bg">#E6F4F1</color>
+    <color name="accent">#34D399</color>
+    <color name="accent_bg">#132A24</color>
 
-    <!-- Secondary / Accent Colors -->
-    <color name="secondary">#0F172A</color>
+    <!-- Dark Navy Surfaces (Web Responsive Equivalent) -->
+    <color name="bg_page">#090D16</color>
+    <color name="card_bg">#1E293B</color>
+    <color name="card_border">#334155</color>
+    <color name="card_elevated">#24334A</color>
+    <color name="input_bg">#0F172A</color>
+
+    <!-- Text Palette -->
+    <color name="text_primary">#F8FAFC</color>
+    <color name="text_secondary">#94A3B8</color>
+    <color name="text_hint">#64748B</color>
+
+    <!-- Slate UI Shades -->
+    <color name="slate_950">#022C22</color>
+    <color name="slate_900">#0F172A</color>
     <color name="slate_800">#1E293B</color>
+    <color name="slate_700">#334155</color>
     <color name="slate_600">#475569</color>
+    <color name="slate_500">#64748B</color>
     <color name="slate_400">#94A3B8</color>
+    <color name="slate_300">#CBD5E1</color>
+    <color name="slate_200">#E2E8F0</color>
     <color name="slate_100">#F1F5F9</color>
     <color name="slate_50">#F8FAFC</color>
 
+    <!-- Error & Warning Alert Palette -->
+    <color name="rose_bg">#3F1219</color>
+    <color name="rose_border">#881337</color>
+    <color name="rose_text">#FB7185</color>
+    <color name="warning_yellow_bg">#3E2723</color>
+    <color name="warning_yellow_text">#F59E0B</color>
+
     <!-- Financial Status Colors -->
-    <color name="income_green">#16A34A</color>
-    <color name="expense_red">#DC2626</color>
-    <color name="transfer_blue">#2563EB</color>
-    <color name="warning_orange">#D97706</color>
+    <color name="income_green">#10B981</color>
+    <color name="expense_red">#EF4444</color>
+    <color name="transfer_blue">#3B82F6</color>
+    <color name="warning_orange">#F59E0B</color>
 
     <!-- Base UI -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
-    <color name="divider">#E2E8F0</color>
-    <color name="card_bg">#FFFFFFFF</color>
-    <color name="input_bg">#F8FAFC</color>
+    <color name="divider">#334155</color>
 </resources>

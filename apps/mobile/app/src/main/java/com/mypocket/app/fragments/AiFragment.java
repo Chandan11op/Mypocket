@@ -53,6 +53,11 @@ public class AiFragment extends Fragment {
             }
         });
 
+        binding.chipSpending.setOnClickListener(v -> sendMessage("Where am I spending the most?"));
+        binding.chipMonthly.setOnClickListener(v -> sendMessage("How much did I spend this month?"));
+        binding.chipTrends.setOnClickListener(v -> sendMessage("Show my spending trends"));
+        binding.chipReduce.setOnClickListener(v -> sendMessage("How can I reduce my expenses?"));
+
         loadHistory();
     }
 
@@ -107,7 +112,7 @@ public class AiFragment extends Fragment {
                         adapter.addMessage(aiTurn);
                         binding.rvChat.smoothScrollToPosition(adapter.getItemCount() - 1);
                     } else {
-                        Toast.makeText(requireContext(), "AI failed to respond", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "AI assistant failed to respond", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

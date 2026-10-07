@@ -47,16 +47,15 @@ public class AiChatAdapter extends RecyclerView.Adapter<AiChatAdapter.ViewHolder
         holder.tvMessage.setText(item.getMessage());
 
         boolean isUser = "user".equalsIgnoreCase(item.getRole());
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) holder.tvMessage.getLayoutParams();
 
         if (isUser) {
             holder.layoutBubble.setGravity(Gravity.END);
             holder.tvMessage.setBackgroundResource(R.drawable.bg_spinner);
-            holder.tvMessage.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.slate_800));
+            holder.tvMessage.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.text_primary));
         } else {
             holder.layoutBubble.setGravity(Gravity.START);
-            holder.tvMessage.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.accent_bg));
-            holder.tvMessage.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.primary_dark));
+            holder.tvMessage.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.card_bg));
+            holder.tvMessage.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.text_primary));
         }
     }
 

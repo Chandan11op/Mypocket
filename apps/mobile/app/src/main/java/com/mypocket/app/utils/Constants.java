@@ -1,7 +1,8 @@
 package com.mypocket.app.utils;
 
 public class Constants {
-    public static final String DEFAULT_BASE_URL = "https://mypocket-server.onrender.com/api/";
+    // Production Render Backend URL
+    public static final String DEFAULT_BASE_URL = "https://mypocket-x5j3.onrender.com/api/";
 
     public static final String PREF_NAME = "MyPocketPrefs";
     public static final String KEY_ACCESS_TOKEN = "access_token";

@@ -3,17 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/slate_50"
+    android:background="@color/bg_page"
     android:orientation="vertical">
 
-    <!-- Account Header Card -->
+    <!-- Account Hero Card -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:cardBackgroundColor="@color/primary"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="4dp">
+        app:cardBackgroundColor="@color/primary_dark"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        app:strokeColor="@color/primary"
+        app:strokeWidth="1dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="Asset / Bank"
-                android:textColor="@color/slate_100"
+                android:textColor="@color/slate_300"
                 android:textSize="14sp" />
 
             <TextView
@@ -45,8 +47,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="₹0.00"
-                android:textColor="@color/white"
-                android:textSize="30sp"
+                android:textColor="@color/accent"
+                android:textSize="32sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.button.MaterialButton
@@ -54,14 +56,15 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:text="Reconcile Account"
                 android:textColor="@color/white"
+                app:cornerRadius="10dp"
                 app:strokeColor="@color/white" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Sorting & Header -->
+    <!-- Header / Sorting -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,8 +75,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="Transaction History"
-            android:textColor="@color/slate_800"
+            android:text="Account History"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -84,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:text="Newest First"
-            android:textColor="@color/primary" />
+            android:textColor="@color/primary_light" />
     </RelativeLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

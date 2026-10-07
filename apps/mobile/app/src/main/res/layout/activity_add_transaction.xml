@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/slate_50"
+    android:background="@color/bg_page"
     android:fillViewport="true">
 
     <LinearLayout
@@ -16,16 +16,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/what_happened"
-            android:textColor="@color/slate_800"
+            android:textColor="@color/text_primary"
             android:textSize="22sp"
             android:textStyle="bold" />
 
-        <!-- Transaction Type Spinner / Selector -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Select transaction type to configure exact details"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+        <!-- Transaction Type Selector Spinner -->
         <Spinner
             android:id="@+id/sp_type"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="12dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/bg_spinner"
             android:padding="12dp" />
 
@@ -35,31 +43,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="Amount (₹)">
+            android:hint="Amount (₹)"
+            app:boxBackgroundColor="@color/card_bg"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="@color/primary"
+            app:hintTextColor="@color/primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
+                android:textColor="@color/text_primary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Dynamic Dropdowns Container -->
+        <!-- Dynamic Account Dropdowns -->
         <TextView
             android:id="@+id/lbl_from_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:text="From Account"
-            android:textColor="@color/slate_600"
+            android:textColor="@color/text_secondary"
             android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/sp_from_account"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="50dp"
             android:layout_marginTop="4dp"
             android:background="@drawable/bg_spinner" />
 
@@ -67,32 +83,40 @@
             android:id="@+id/lbl_to_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:text="To Account"
-            android:textColor="@color/slate_600"
+            android:textColor="@color/text_secondary"
             android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/sp_to_account"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="50dp"
             android:layout_marginTop="4dp"
             android:background="@drawable/bg_spinner" />
 
-        <!-- Counterparty Person Field (for Borrow, Repay, Lend, Receive Back) -->
+        <!-- Counterparty Person Field -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tl_person"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Person / Counterparty (e.g. Rahul)">
+            android:layout_marginTop="16dp"
+            android:hint="Person / Counterparty (e.g. Rahul)"
+            app:boxBackgroundColor="@color/card_bg"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="@color/primary"
+            app:hintTextColor="@color/primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_person"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textColor="@color/text_primary" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Reason / Description -->
@@ -100,31 +124,48 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Reason / Description">
+            android:layout_marginTop="16dp"
+            android:hint="Reason / Description"
+            app:boxBackgroundColor="@color/card_bg"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="@color/primary"
+            app:hintTextColor="@color/primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="@color/text_primary" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Historical Date Picker -->
+        <!-- Transaction Date Picker -->
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Transaction Date">
+            android:layout_marginTop="16dp"
+            android:hint="Transaction Date"
+            app:boxBackgroundColor="@color/card_bg"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="@color/primary"
+            app:hintTextColor="@color/primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="false" />
+                android:focusable="false"
+                android:textColor="@color/text_primary" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Submit Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save_transaction"
             android:layout_width="match_parent"
@@ -132,7 +173,10 @@
             android:layout_marginTop="24dp"
             android:backgroundTint="@color/primary"
             android:text="Save Transaction"
-            android:textSize="16sp" />
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp" />
 
     </LinearLayout>
 </ScrollView>

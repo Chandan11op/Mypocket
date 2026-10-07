@@ -28,6 +28,10 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
+    // Health Check
+    @GET("health")
+    Call<GenericResponse> checkHealth();
+
     // Auth
     @POST("auth/login")
     Call<AuthResponse> login(@Body LoginRequest request);

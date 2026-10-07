@@ -21,12 +21,20 @@ public class RegisterRequest {
     @SerializedName("password")
     private String password;
 
-    public RegisterRequest(String mobileNumber, String username, String email, String fullName, String dateOfBirth, String password) {
+    @SerializedName("confirm_password")
+    private String confirmPassword;
+
+    @SerializedName("turnstile_token")
+    private String turnstileToken;
+
+    public RegisterRequest(String mobileNumber, String username, String email, String fullName, String dateOfBirth, String password, String confirmPassword) {
         this.mobileNumber = mobileNumber;
         this.username = username;
         this.email = email;
         this.fullName = fullName;
         this.dateOfBirth = dateOfBirth;
         this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.turnstileToken = "dummy_token";
     }
 }
