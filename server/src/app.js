@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -67,10 +68,19 @@ app.use(cookieParser());
 
 // Health Check Route
 app.get('/api/health', (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'My Pocket API is running',
-  });
+  const isDbConnected = mongoose.connection.readyState === 1;
+
+  if (isDbConnected) {
+    res.status(200).json({
+      status: 'ok',
+      message: 'My Pocket API is running and database is connected',
+    });
+  } else {
+    res.status(503).json({
+      status: 'error',
+      message: 'My Pocket API is running but database connection is unavailable',
+    });
+  }
 });
 
 // Mount Routes
